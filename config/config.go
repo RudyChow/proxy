@@ -59,7 +59,7 @@ func (this *Config) initConfig() {
 
 	err = viper.Unmarshal(&this)
 	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+		panic(fmt.Errorf("Can not Unmarshal config file: %s \n", err))
 		return
 	}
 
