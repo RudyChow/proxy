@@ -1,20 +1,11 @@
 package main
 
 import (
-	"github.com/RudyChow/proxy/api"
-	_ "github.com/RudyChow/proxy/config"
-	"github.com/RudyChow/proxy/spiders"
-	"github.com/RudyChow/proxy/utils/filters"
+	"github.com/RudyChow/proxy/cmd"
 )
 
 func main() {
 
-	//更新可用的代理ip池
-	go filters.UpdateUsefulProxy()
+	cmd.Execute()
 
-	//开启http服务
-	go api.StartHttpServer()
-
-	//开始采集数据
-	spiders.StartCrawl()
 }

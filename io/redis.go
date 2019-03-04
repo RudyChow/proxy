@@ -82,7 +82,7 @@ func (this *RedisDriver) GetBestUsefulProxyPool() models.ProxyShortcut {
 }
 
 //新建一个redis客户端
-func newRedis(redisConf *config.Redis) (redisDriver *RedisDriver) {
+func newRedis(redisConf config.Redis) (redisDriver *RedisDriver) {
 
 	redisDriver = &RedisDriver{}
 	client := redis.NewClient(&redis.Options{
@@ -93,7 +93,7 @@ func newRedis(redisConf *config.Redis) (redisDriver *RedisDriver) {
 
 	if _, err := client.Ping().Result(); err != nil {
 		fmt.Println("redis connect failed")
-		os.Exit(0)
+		os.Exit(1)
 	}
 	redisDriver.client = client
 	return

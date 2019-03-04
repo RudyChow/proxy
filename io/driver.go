@@ -10,12 +10,13 @@ import (
 var Handler Driver
 
 func init() {
+	fmt.Println(config.Conf)
 	switch config.Conf.IO.Driver {
 	case "redis":
 		Handler = newRedis(config.Conf.IO.Redis)
 	default:
-		fmt.Println("unsupported io driver")
-		os.Exit(0)
+		fmt.Println("unsupported io driver ")
+		os.Exit(1)
 	}
 
 }

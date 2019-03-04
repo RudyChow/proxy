@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/go-ini/ini"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -20,54 +20,49 @@ type Config struct {
 
 type IO struct {
 	Driver string
-	Redis  *Redis
-	Mysql  *Mysql
+	Redis  Redis
+	Mysql  Mysql
 }
 
 type Redis struct {
-	Addr string `ini:"addr"`
-	Auth string `ini:"auth"`
-	Db   int    `ini:"db"`
+	Addr string
+	Auth string
+	Db   int
 }
 
 type Mysql struct {
-	Addr     string `ini:"addr"`
-	User     string `ini:"auth"`
-	Password int    `ini:"password"`
-	Db       string `ini:"db"`
+	Addr     string
+	User     string
+	Password int
+	Db       string
 }
 
 func init() {
 	Conf = &Config{}
+	Conf.initConfig()
+}
+//初始化数据
+func (this *Config) initConfig() {
 
-	cfg, err := ini.ShadowLoad("config/config.ini")
+	fmt.Println("[init config params]......")
+	//设置配置文件类型
+	viper.SetConfigType("yaml")
+	//设置配置文件名称（除去后缀）
+	viper.SetConfigName(".env")
+	//配置文件目录
+	viper.AddConfigPath("./")
+	err := viper.ReadInConfig()
 	if err != nil {
-		fmt.Print(err)
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+		return
 	}
 
-	//初始化爬虫网站相关的配置
-	initSpridersConf(cfg)
-	//初始化持久层相关配置
-	initIOConf(cfg)
-}
-
-func initSpridersConf(cfg *ini.File) {
-	Conf.Spriders = cfg.Section("spriders").KeysHash()
-	Conf.Targets = cfg.Section("targets").Key("target").ValueWithShadows()
-}
-
-func initIOConf(cfg *ini.File) {
-	Conf.IO.Driver = cfg.Section("io").Key("driver").String()
-	//redis
-	redisConf := &Redis{}
-	if err := cfg.Section("redis").MapTo(redisConf); err != nil {
-		fmt.Println(err)
+	err = viper.Unmarshal(&this)
+	if err != nil {
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+		return
 	}
-	Conf.IO.Redis = redisConf
-	//mysql
-	mysqlConf := &Mysql{}
-	if err := cfg.Section("mysql").MapTo(mysqlConf); err != nil {
-		fmt.Println(err)
-	}
-	Conf.IO.Mysql = mysqlConf
+
+
+	fmt.Println("[finish config params]......")
 }
