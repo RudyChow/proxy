@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/RudyChow/proxy/api"
-	"github.com/RudyChow/proxy/spiders"
-	"github.com/RudyChow/proxy/utils/filters"
+	"github.com/RudyChow/proxy/app/http"
+	"github.com/RudyChow/proxy/app/utils/spiders"
+	"github.com/RudyChow/proxy/app/utils/filters"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 		go filters.UpdateUsefulProxy()
 
 		//开启http服务
-		go api.StartHttpServer()
+		go http.StartHttpServer()
 
 		//开始采集数据
 		spiders.StartCrawl()

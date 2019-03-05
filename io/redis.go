@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/RudyChow/proxy/config"
-	"github.com/RudyChow/proxy/models"
+	"github.com/RudyChow/proxy/app/models"
 	"github.com/go-redis/redis"
 	"os"
 )

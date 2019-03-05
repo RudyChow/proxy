@@ -3,7 +3,7 @@ package spiders
 import (
 	"fmt"
 	"github.com/RudyChow/proxy/io"
-	"github.com/RudyChow/proxy/models"
+	"github.com/RudyChow/proxy/app/models"
 	"io/ioutil"
 	"net/http"
 	"regexp"

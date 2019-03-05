@@ -2,7 +2,7 @@ package filters
 
 import (
 	"github.com/RudyChow/proxy/io"
-	"github.com/RudyChow/proxy/models"
+	"github.com/RudyChow/proxy/app/models"
 	"net/http"
 	"net/url"
 	"time"

@@ -1,4 +1,5 @@
-package api
+package controllers
+
 
 import (
 	"github.com/RudyChow/proxy/io"
@@ -6,15 +7,8 @@ import (
 	"strconv"
 )
 
-func StartHttpServer() {
-	r := gin.Default()
-	r.GET("/proxy", getBest)
-	r.GET("/proxy/:count", getUserfulProxyList)
-	r.Run() // listen and serve on 0.0.0.0:8080
-}
-
 //拿最好的代理出来
-func getBest(c *gin.Context) {
+func GetBest(c *gin.Context) {
 	shortcut := io.Handler.GetBestUsefulProxyPool()
 
 	c.JSON(200, gin.H{
@@ -24,7 +18,7 @@ func getBest(c *gin.Context) {
 }
 
 //获取有用的代理列表
-func getUserfulProxyList(c *gin.Context) {
+func GetUserfulProxyList(c *gin.Context) {
 	param := c.Param("count")
 	count, err := strconv.Atoi(param)
 	if err != nil {

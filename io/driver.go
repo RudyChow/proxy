@@ -3,7 +3,7 @@ package io
 import (
 	"fmt"
 	"github.com/RudyChow/proxy/config"
-	"github.com/RudyChow/proxy/models"
+	"github.com/RudyChow/proxy/app/models"
 	"os"
 )
 
