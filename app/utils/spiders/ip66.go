@@ -1,10 +1,10 @@
 package spiders
 
 import (
-	"log"
-	"github.com/RudyChow/proxy/io"
 	"github.com/RudyChow/proxy/app/models"
+	"github.com/RudyChow/proxy/app/io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"regexp"
 	"strconv"

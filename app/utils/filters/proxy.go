@@ -1,25 +1,20 @@
 package filters
 
 import (
-	"github.com/RudyChow/proxy/io"
 	"github.com/RudyChow/proxy/app/models"
+	"github.com/RudyChow/proxy/app/io"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
 )
 
 func UpdateUsefulProxy() {
-
-	for {
-		proxypool := io.Handler.GetDataFromProxyPool()
-
-		for _, proxy := range proxypool {
-			go checkSpeed(proxy)
-		}
-		//每分钟执行一次
-		time.Sleep(1 * time.Minute)
+	log.Println("[start checking]")
+	proxypool := io.Handler.GetDataFromProxyPool()
+	for _, proxy := range proxypool {
+		go checkSpeed(proxy)
 	}
-
 }
 
 //测速

@@ -1,8 +1,7 @@
 package controllers
 
-
 import (
-	"github.com/RudyChow/proxy/io"
+	"github.com/RudyChow/proxy/app/io"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )

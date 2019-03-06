@@ -1,11 +1,9 @@
 package spiders
 
 import (
-	"log"
 	"github.com/RudyChow/proxy/config"
-	"github.com/RudyChow/proxy/io"
+	"log"
 	"os"
-	"time"
 )
 
 type Spider interface {
@@ -40,20 +38,9 @@ func init() {
 }
 
 func StartCrawl() {
-	for {
-
-		//当可用代理超过100个，则暂缓60分钟进行采集
-		if io.Handler.CountUsefulProxy() >= 100 {
-			time.Sleep(60 * time.Minute)
-		}
-
-		//开始采集数据
-		for _, spider := range spiders {
-			go spider.Crawl()
-		}
-
-		//1分钟采集一次
-		time.Sleep(time.Duration(1) * time.Minute)
+	log.Println("[start crawling]")
+	//开始采集数据
+	for _, spider := range spiders {
+		go spider.Crawl()
 	}
-
 }

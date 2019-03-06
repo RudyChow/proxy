@@ -1,8 +1,8 @@
 package config
 
 import (
-	"log"
 	"github.com/spf13/viper"
+	"log"
 )
 
 var (
@@ -41,6 +41,7 @@ func init() {
 	Conf = &Config{}
 	Conf.initConfig()
 }
+
 //初始化数据
 func (this *Config) initConfig() {
 
@@ -62,7 +63,6 @@ func (this *Config) initConfig() {
 		log.Panicf("Can not Unmarshal config file: %s \n", err)
 		return
 	}
-
 
 	log.Println("[finish config params]......")
 }

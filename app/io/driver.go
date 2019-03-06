@@ -1,9 +1,9 @@
 package io
 
 import (
-	"log"
-	"github.com/RudyChow/proxy/config"
 	"github.com/RudyChow/proxy/app/models"
+	"github.com/RudyChow/proxy/config"
+	"log"
 	"os"
 )
 

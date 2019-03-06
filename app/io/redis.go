@@ -2,10 +2,10 @@ package io
 
 import (
 	"encoding/json"
-	"log"
-	"github.com/RudyChow/proxy/config"
 	"github.com/RudyChow/proxy/app/models"
+	"github.com/RudyChow/proxy/config"
 	"github.com/go-redis/redis"
+	"log"
 	"os"
 )
 
