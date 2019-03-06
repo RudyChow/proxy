@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	"log"
 	"github.com/spf13/viper"
 )
 
@@ -44,7 +44,7 @@ func init() {
 //初始化数据
 func (this *Config) initConfig() {
 
-	fmt.Println("[init config params]......")
+	log.Println("[init config params]......")
 	//设置配置文件类型
 	viper.SetConfigType("yaml")
 	//设置配置文件名称（除去后缀）
@@ -53,16 +53,16 @@ func (this *Config) initConfig() {
 	viper.AddConfigPath("./")
 	err := viper.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+		log.Panicf("Fatal error config file: %s \n", err)
 		return
 	}
 
 	err = viper.Unmarshal(&this)
 	if err != nil {
-		panic(fmt.Errorf("Can not Unmarshal config file: %s \n", err))
+		log.Panicf("Can not Unmarshal config file: %s \n", err)
 		return
 	}
 
 
-	fmt.Println("[finish config params]......")
+	log.Println("[finish config params]......")
 }

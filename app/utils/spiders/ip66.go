@@ -1,7 +1,7 @@
 package spiders
 
 import (
-	"fmt"
+	"log"
 	"github.com/RudyChow/proxy/io"
 	"github.com/RudyChow/proxy/app/models"
 	"io/ioutil"
@@ -19,18 +19,18 @@ func (this *Ip66) Crawl() {
 	//获取数据
 	res, err := http.Get(this.url)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	defer res.Body.Close()
 	if res.StatusCode != 200 {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	bodyStr := string(body)

@@ -2,7 +2,7 @@ package io
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"github.com/RudyChow/proxy/config"
 	"github.com/RudyChow/proxy/app/models"
 	"github.com/go-redis/redis"
@@ -23,7 +23,7 @@ func (this *RedisDriver) SaveData2ProxyPool(proxy *models.Proxy) {
 	data, _ := json.Marshal(proxy)
 	err := this.client.SAdd(REDIS_PROXYPOOL, string(data)).Err()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 
@@ -92,7 +92,7 @@ func newRedis(redisConf config.Redis) (redisDriver *RedisDriver) {
 	})
 
 	if _, err := client.Ping().Result(); err != nil {
-		fmt.Println("redis connect failed")
+		log.Println("redis connect failed")
 		os.Exit(1)
 	}
 	redisDriver.client = client

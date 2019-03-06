@@ -1,7 +1,7 @@
 package io
 
 import (
-	"fmt"
+	"log"
 	"github.com/RudyChow/proxy/config"
 	"github.com/RudyChow/proxy/app/models"
 	"os"
@@ -14,7 +14,7 @@ func init() {
 	case "redis":
 		Handler = newRedis(config.Conf.IO.Redis)
 	default:
-		fmt.Println("unsupported io driver ")
+		log.Println("unsupported io driver ")
 		os.Exit(1)
 	}
 
