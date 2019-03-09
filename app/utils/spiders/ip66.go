@@ -1,8 +1,8 @@
 package spiders
 
 import (
-	"github.com/RudyChow/proxy/app/models"
 	"github.com/RudyChow/proxy/app/io"
+	"github.com/RudyChow/proxy/app/models"
 	"io/ioutil"
 	"log"
 	"net/http"

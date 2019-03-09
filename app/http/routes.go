@@ -6,6 +6,14 @@ import (
 )
 
 func registerRouters(r *gin.Engine) {
-	r.GET("/proxy", controllers.GetBest)
-	r.GET("/proxy/:count", controllers.GetUserfulProxyList)
+	registerApiRoutes(r)
+}
+
+func registerApiRoutes(r *gin.Engine) {
+	api := r.Group("/api")
+	v1 := api.Group("/v1")
+	{
+		v1.GET("/proxy", controllers.GetBest)
+		v1.GET("/proxy/:count", controllers.GetUserfulProxyList)
+	}
 }

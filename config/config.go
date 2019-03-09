@@ -16,6 +16,8 @@ type Config struct {
 	Targets []string
 	//持久层
 	IO IO
+	//web
+	Http Http
 }
 
 type IO struct {
@@ -35,6 +37,10 @@ type Mysql struct {
 	User     string
 	Password int
 	Db       string
+}
+
+type Http struct {
+	Port uint16
 }
 
 func init() {
