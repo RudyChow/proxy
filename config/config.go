@@ -35,7 +35,7 @@ type Redis struct {
 type Mysql struct {
 	Addr     string
 	User     string
-	Password int
+	Password string
 	Db       string
 }
 

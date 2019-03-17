@@ -12,6 +12,7 @@ import (
 func UpdateUsefulProxy() {
 	log.Println("[start checking]")
 	proxypool := io.Handler.GetDataFromProxyPool()
+	//log.Println(proxypool)
 	for _, proxy := range proxypool {
 		go checkSpeed(proxy)
 	}
@@ -42,5 +43,5 @@ func checkSpeed(proxy *models.Proxy) {
 	endTime := time.Now().UnixNano() / 1e6
 	defer res.Body.Close()
 	//把可用的代理进行持久化
-	go io.Handler.SaveData2UsefulProxyPool(proxy, float64(endTime-startTime))
+	go io.Handler.SaveData2UsefulProxyPool(proxy, endTime-startTime)
 }

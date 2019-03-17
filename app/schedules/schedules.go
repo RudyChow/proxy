@@ -8,12 +8,14 @@ import (
 
 func Run() {
 	oneMin := time.NewTicker(time.Minute)
+	tenSec := time.NewTicker(30 * time.Second)
 
 	for {
 		select {
 		case <-oneMin.C:
-			go filters.UpdateUsefulProxy()
+		case <-tenSec.C:
 			go spiders.StartCrawl()
+			go filters.UpdateUsefulProxy()
 		}
 	}
 }

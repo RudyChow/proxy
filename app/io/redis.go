@@ -6,10 +6,9 @@ import (
 	"github.com/RudyChow/proxy/config"
 	"github.com/go-redis/redis"
 	"log"
-	"os"
 )
 
-type RedisDriver struct {
+type redisDriver struct {
 	client *redis.Client
 }
 
@@ -19,7 +18,7 @@ const (
 )
 
 //保存数据到代理池中
-func (this *RedisDriver) SaveData2ProxyPool(proxy *models.Proxy) {
+func (this *redisDriver) SaveData2ProxyPool(proxy *models.Proxy) {
 	data, _ := json.Marshal(proxy)
 	err := this.client.SAdd(REDIS_PROXYPOOL, string(data)).Err()
 	if err != nil {
@@ -28,7 +27,7 @@ func (this *RedisDriver) SaveData2ProxyPool(proxy *models.Proxy) {
 }
 
 //从代理池中获取所有代理数据
-func (this *RedisDriver) GetDataFromProxyPool() []*models.Proxy {
+func (this *redisDriver) GetDataFromProxyPool() []*models.Proxy {
 	data, _ := this.client.SMembers(REDIS_PROXYPOOL).Result()
 
 	var proxypool []*models.Proxy
@@ -41,27 +40,27 @@ func (this *RedisDriver) GetDataFromProxyPool() []*models.Proxy {
 }
 
 //代理池的数量
-func (this *RedisDriver) CountProxyPool() int64 {
+func (this *redisDriver) CountProxyPool() int64 {
 	return this.client.SCard(REDIS_PROXYPOOL).Val()
 }
 
 //可用代理的数量
-func (this *RedisDriver) CountUsefulProxy() int64 {
+func (this *redisDriver) CountUsefulProxy() int64 {
 	return this.client.ZCard(REDIS_USEFULPROXYPOOL).Val()
 }
 
 //存储数据到可用的代理池中
-func (this *RedisDriver) SaveData2UsefulProxyPool(proxy *models.Proxy, score float64) {
-	this.client.ZAdd(REDIS_USEFULPROXYPOOL, redis.Z{Score: score, Member: proxy.GetLink()})
+func (this *redisDriver) SaveData2UsefulProxyPool(proxy *models.Proxy, score int64) {
+	this.client.ZAdd(REDIS_USEFULPROXYPOOL, redis.Z{Score: float64(score), Member: proxy.GetLink()})
 }
 
 //从可用的代理池中删除数据
-func (this *RedisDriver) RemoveDataFromProxyPool(proxy *models.Proxy) {
+func (this *redisDriver) RemoveDataFromProxyPool(proxy *models.Proxy) {
 	this.client.ZRem(REDIS_USEFULPROXYPOOL, proxy.GetLink())
 }
 
 //获取可用代理
-func (this *RedisDriver) GetShortcutFromUsefulProxyPool(count int64) []models.ProxyShortcut {
+func (this *redisDriver) GetShortcutFromUsefulProxyPool(count int64) []models.ProxyShortcut {
 	zArr, _ := this.client.ZRangeByScoreWithScores(REDIS_USEFULPROXYPOOL, redis.ZRangeBy{Min: "0", Max: "5000", Offset: 0, Count: count}).Result()
 
 	var proxyShortcut []models.ProxyShortcut
@@ -73,7 +72,7 @@ func (this *RedisDriver) GetShortcutFromUsefulProxyPool(count int64) []models.Pr
 }
 
 //获取质量最好的可用代理
-func (this *RedisDriver) GetBestUsefulProxyPool() models.ProxyShortcut {
+func (this *redisDriver) GetBestUsefulProxyPool() models.ProxyShortcut {
 	shorcutArr := this.GetShortcutFromUsefulProxyPool(1)
 	if len(shorcutArr) == 0 {
 		return models.ProxyShortcut{}
@@ -82,9 +81,9 @@ func (this *RedisDriver) GetBestUsefulProxyPool() models.ProxyShortcut {
 }
 
 //新建一个redis客户端
-func newRedis(redisConf config.Redis) (redisDriver *RedisDriver) {
+func newRedis(redisConf config.Redis) (driver *redisDriver) {
 
-	redisDriver = &RedisDriver{}
+	driver = &redisDriver{}
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisConf.Addr,
 		Password: redisConf.Auth, // no password set
@@ -92,9 +91,8 @@ func newRedis(redisConf config.Redis) (redisDriver *RedisDriver) {
 	})
 
 	if _, err := client.Ping().Result(); err != nil {
-		log.Println("redis connect failed")
-		os.Exit(1)
+		log.Panic("redis connect failed")
 	}
-	redisDriver.client = client
+	driver.client = client
 	return
 }

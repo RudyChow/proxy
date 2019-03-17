@@ -41,6 +41,12 @@ func (this *Ip66) Crawl() {
 	for i := 0; i < len(ips); i++ {
 		ipArr := strings.Split(ips[i], ":")
 		port, _ := strconv.Atoi(ipArr[1])
-		go io.Handler.SaveData2ProxyPool(&models.Proxy{ipArr[0], port, "http"})
+
+		proxy := new(models.Proxy)
+		proxy.Ip = ipArr[0]
+		proxy.Port = port
+		proxy.Protocol = "http"
+
+		go io.Handler.SaveData2ProxyPool(proxy)
 	}
 }
