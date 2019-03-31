@@ -32,7 +32,6 @@ func (this *mysqlDriver) GetShortcutFromUsefulProxyPool(count int64) []models.Pr
 func (this *mysqlDriver) GetBestUsefulProxyPool() models.ProxyShortcut {
 	proxy := &models.Proxy{}
 	this.db.Where("score > ?", 0).Order("score asc").First(&proxy)
-	log.Println(proxy)
 	return proxy.GetShortcut()
 }
 func (this *mysqlDriver) SaveData2ProxyPool(proxy *models.Proxy) {
@@ -60,7 +59,6 @@ func (this *mysqlDriver) CountUsefulProxy() int64 {
 func newDb(mysqlConf config.Mysql) (driver *mysqlDriver) {
 	arg := fmt.Sprintf("%s:%s@tcp(%s)/%s",
 		mysqlConf.User, mysqlConf.Password, mysqlConf.Addr, mysqlConf.Db)
-	fmt.Println(arg)
 	db, err := gorm.Open("mysql", arg)
 	//db, err := gorm.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/proxy")
 	if err != nil {

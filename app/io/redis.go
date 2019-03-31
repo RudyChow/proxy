@@ -66,7 +66,7 @@ func (this *redisDriver) GetShortcutFromUsefulProxyPool(count int64) []models.Pr
 	var proxyShortcut []models.ProxyShortcut
 	for _, z := range zArr {
 		addr := z.Member.(string)
-		proxyShortcut = append(proxyShortcut, models.ProxyShortcut{Addr: addr, Speed: int(z.Score)})
+		proxyShortcut = append(proxyShortcut, models.ProxyShortcut{Addr: addr, Score: int(z.Score)})
 	}
 	return proxyShortcut
 }

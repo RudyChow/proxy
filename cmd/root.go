@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"github.com/RudyChow/proxy/app/http"
+	"github.com/RudyChow/proxy/app/rpc"
 	"github.com/RudyChow/proxy/app/schedules"
+	"github.com/RudyChow/proxy/config"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 )
 
 var rootCmd = &cobra.Command{
@@ -16,13 +17,23 @@ var rootCmd = &cobra.Command{
 		go schedules.Run()
 
 		//开启http服务
-		http.StartHttpServer()
+		if(config.Conf.Http.Enable){
+			go http.StartHttpServer()
+		}
+
+
+		//开启rpc服务
+		if(config.Conf.Rpc.Enable){
+			go rpc.StartRpcServer()
+		}
+
+
+		select{}
 	},
 }
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Println(err)
-		os.Exit(1)
+		log.Panic(err)
 	}
 }

@@ -18,6 +18,8 @@ type Config struct {
 	IO IO
 	//web
 	Http Http
+	//rpc
+	Rpc Rpc
 }
 
 type IO struct {
@@ -40,7 +42,14 @@ type Mysql struct {
 }
 
 type Http struct {
-	Port uint16
+	Mode string
+	Enable bool
+	Addr string
+}
+
+type Rpc struct {
+	Enable bool
+	Addr string
 }
 
 func init() {

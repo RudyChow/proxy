@@ -14,7 +14,7 @@ type Proxy struct {
 
 type ProxyShortcut struct {
 	Addr  string `json:"addr"`
-	Speed int    `json:"speed"`
+	Score int    `json:"speed"`
 }
 
 //生成代理连接，如http://127.0.0.1:1080

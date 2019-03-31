@@ -14,6 +14,6 @@ func registerApiRoutes(r *gin.Engine) {
 	v1 := api.Group("/v1")
 	{
 		v1.GET("/proxy", controllers.GetBest)
-		v1.GET("/proxy/:count", controllers.GetUserfulProxyList)
+		v1.GET("/proxy/:count", controllers.GetUsefulProxyList)
 	}
 }

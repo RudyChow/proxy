@@ -12,12 +12,12 @@ func GetBest(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"addr":  shortcut.Addr,
-		"score": shortcut.Speed,
+		"score": shortcut.Score,
 	})
 }
 
 //获取有用的代理列表
-func GetUserfulProxyList(c *gin.Context) {
+func GetUsefulProxyList(c *gin.Context) {
 	param := c.Param("count")
 	count, err := strconv.Atoi(param)
 	if err != nil {
